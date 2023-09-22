@@ -5,6 +5,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, FormGroupDirectiv
 import { HttpErrorResponse } from '@angular/common/http';
 import { RegisterEndUserRequestDTO } from '../models/enduser-register-request.model';
 import { ConfirmedValidator } from 'src/app/utils/confirmed.validator';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,8 +18,9 @@ export class UserRegisterComponent implements OnInit, OnDestroy  {
   private registerUserSubscription?: Subscription;
 
   registerForm: FormGroup = new FormGroup({});
+  validationErrors: string[] = [];
 
-  constructor(private authService:AuthService, private formBuilder: FormBuilder) { }
+  constructor(private authService:AuthService, private formBuilder: FormBuilder, private router:Router) { }
   
   ngOnInit(): void {
     this.initForm();
@@ -43,32 +45,19 @@ export class UserRegisterComponent implements OnInit, OnDestroy  {
         password: this.f['password'].value!
       }
 
-      this.registerUserSubscription = this.authService.registerUser(user).pipe(
-        catchError(this.handleError)
-      ).subscribe({ 
-        error: e => console.log('HTTP Error', e)
+      this.registerUserSubscription = this.authService.registerUser(user).subscribe({ 
+        next: () => this.router.navigateByUrl('/'),
+        error: error => {
+          this.validationErrors = error;
+        } 
     } );
+
+    
       
     } 
   }
 
-  private handleError(error: HttpErrorResponse) {
-    if (error.status === 0) {
-    // A client-side or network error occurred. Handle it accordingly.
-    //console.error('An error occurred:', error.error);
-    this.registerForm.patchValue({
-      email: "An error occurred. Try again later!"
-    })
-  } else {
-    // The backend returned an unsuccessful response code.
-    // The response body may contain clues as to what went wrong.
-    console.error(`Backend returned code ${error.status}, body was: `, error.error);
-    
-      // this.model.email = 'ERRO';
-  }
-  // Return an observable with a user-facing error message.
-  return throwError(() => new Error('Something bad happened; please try again later.'));
-}
+ 
 
 get f(){
   return this.registerForm.controls;
