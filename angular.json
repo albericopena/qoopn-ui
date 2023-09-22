@@ -5,6 +5,12 @@
   "projects": {
     "Smartfiq.Qoop.UI.Angular": {
       "projectType": "application",
+      "i18n": {
+        "sourceLocale":"en-US",
+        "locales": {
+          "pt-BR": "src/locale/messages.ptbr.xlf"
+        }
+      },
       "schematics": {},
       "root": "",
       "sourceRoot": "src",
@@ -13,6 +19,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "localize": [
+              "pt-BR"
+            ],
             "outputPath": "dist/smartfiq.qoop.ui.angular",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -25,6 +34,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/custom-theme.scss",
               "src/styles.css"
             ],
             "scripts": []
@@ -51,7 +61,13 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -72,6 +88,14 @@
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
             "browserTarget": "Smartfiq.Qoop.UI.Angular:build"
+          },
+          "configurations" : {
+            "pt-BR": {
+                "outputPath": "src/locale/",
+                "outFile": "messages.ptbr.xlf",
+                "i18nFormat": "xlf",
+                "i18nLocale": "pt"
+            }
           }
         },
         "test": {
@@ -94,5 +118,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

@@ -1,0 +1,66 @@
+<div class="register-container">
+    <div class="register-content">
+        <!-- <mat-toolbar class="login-toolbar" color="primary" i18n>REGISTAR NOVA CONTA</mat-toolbar> -->
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Register</mat-card-title>
+                <mat-card-subtitle>New User</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+            <form class="qoopn-form" [formGroup]="registerForm" (ngSubmit)="onFormSubmit()" autocomplete="off">
+                <div class="mt-3">
+                    <mat-form-field class="full-width">
+                        <mat-label for="email">Email</mat-label>
+                        <input matInput type="email" formControlName="email"
+                        placeholder="Ex. pat@example.com" >
+                        <mat-error *ngIf="f['email'].hasError('email') && !f['email'].hasError('required')">
+                            Please enter a valid email address
+                        </mat-error>
+                        <mat-error *ngIf="f['email'].hasError('required')">
+                            Email is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="mt-3">
+                    <mat-form-field class="full-width">
+                        <mat-label for="password" i18n>Password</mat-label>
+                        <input matInput type="password" formControlName="password">
+                        <mat-error *ngIf="f['password'].hasError('required')" i18n>
+                            Password is <strong>required</strong>
+                        </mat-error>
+                        <mat-error *ngIf="f['password'].hasError('minlength')" i18n>
+                            Password must be at least 8 characters
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="mt-3">
+                    <mat-form-field class="full-width">
+                        <mat-label i18n for="confirmPassword">Confirm Password</mat-label>
+                        <input matInput type="password" formControlName="confirmPassword">
+                        <mat-error *ngIf="f['confirmPassword'].hasError('minlength') && !f['confirmPassword'].hasError('required')" i18n>
+                            Password must be at least 8 characters
+                        </mat-error>
+                        <mat-error *ngIf="f['confirmPassword'].hasError('required')" i18n>
+                            Confirm Password is <strong>required</strong>
+                        </mat-error><mat-error *ngIf="f['confirmPassword'].hasError('confirmedValidator')" i18n>
+                            Confirm Password must match Password
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <!-- <div class="mt-3" *ngIf="errorMessage.length > 0">
+                    <ul class="text-danger">
+                        <li *ngFor="let error of validationErrors">
+                            {{error}}
+                        </li>
+                        <li>{{errorMessage}}</li>
+                    </ul>
+                </div> -->
+                <mat-card-actions align="end">
+                    <button type="submit" mat-button color="primary" i18n>Create</button>
+                </mat-card-actions>
+            </form>
+            </mat-card-content>
+        </mat-card> 
+    
+    </div>
+</div>

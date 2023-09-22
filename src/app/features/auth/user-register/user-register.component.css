@@ -1,0 +1,17 @@
+
+.register-container {
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    display: flex;
+  }
+  
+  .register-content {
+    width: 400px;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .register-toolbar {
+    justify-content: center;
+  }
